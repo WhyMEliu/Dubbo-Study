@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://code.alibabatech.com/schema/dubbo  
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 为当前的服务提供者取个名字，提供给注册中心 -->
+	<dubbo:application name="imooc-dubbo-order-service" />
+
+	<!-- 注册中心配置: 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="192.168.1.190:2181"/>
+
+	<!-- 服务提供者协议配置: 用dubbo协议在20881端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20881" />
+	
+	<!-- 服务提供者暴露的具体服务配置 -->
+	<!-- retries:远程服务调用重试次数，不需要重试请设为0 -->
+	<dubbo:service retries="0" interface="com.imooc.order.service.OrdersService" 
+		ref="ordersService" />
+		
+	<!-- 监控服务的注册 -->
+<!-- 	<dubbo:monitor protocol="registry"></dubbo:monitor> -->
+</beans>  
